@@ -1,23 +1,28 @@
 let runAddition = () => {
-    let num1 = parseFloat(document.getElementById("num1").value);
-    let num2 = parseFloat(document.getElementById("num2").value);
-
-    let result = num1 + num2;
-    document.getElementById("system_response").innerHTML = "Result: " + result;
+	send_request("sum")
 };
 
 let runSubtraction = () => {
-    let num1 = parseFloat(document.getElementById("num1").value);
-    let num2 = parseFloat(document.getElementById("num2").value);
-
-    let result = num1 - num2;
-    document.getElementById("system_response").innerHTML = "Result: " + result;
+	send_request("sub")
 };
 
 let runMultiplication = () => {
-    let num1 = parseFloat(document.getElementById("num1").value);
-    let num2 = parseFloat(document.getElementById("num2").value);
-
-    let result = num1 * num2;
-    document.getElementById("system_response").innerHTML = "Result: " + result;
+	send_request("mul")
 };
+
+function send_request(operation){
+
+    num1 = document.getElementById("num1").value;
+    num2 = document.getElementById("num2").value;
+
+	let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("system_response").innerHTML = xhttp.responseText;
+        }
+    };
+
+    xhttp.open("GET", operation+"?num1="+num1+"&num2="+num2, true);
+    xhttp.send();
+}
